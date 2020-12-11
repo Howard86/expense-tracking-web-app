@@ -1,57 +1,62 @@
 import React, { FC } from 'react';
-import Head from 'next/head';
-import FirebaseAuth from '@/components/FirebaseAuth';
+import useSWR from 'swr';
+import Link from 'next/link';
+import useUser from '@/hooks/useUser';
+import type { AuthResponse } from './api/auth';
 
-const Home: FC = () => (
-  <div>
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+const fetcher = (endpoint: string, token: string) =>
+  fetch(`/api/${endpoint}`, {
+    method: 'GET',
+    headers: new Headers({ 'Content-Type': 'application/json', token }),
+    credentials: 'same-origin',
+  }).then((res) => res.json());
 
-    <main>
-      <h1>
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
+const Home: FC = () => {
+  const { user, logout } = useUser();
+  const { data, error } = useSWR<AuthResponse>(
+    user ? ['auth', user.token] : null,
+    fetcher,
+    { errorRetryCount: 1 },
+  );
 
-      <p>
-        Get started by editing <code>pages/index.js</code>
-      </p>
-
+  if (!user) {
+    return (
       <div>
-        <a href="https://nextjs.org/docs">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a href="https://nextjs.org/learn">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
-
-        <a href="https://github.com/vercel/next.js/tree/master/examples">
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
-
-        <a href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app">
-          <h3>Deploy &rarr;</h3>
-          <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-        </a>
+        <p>Hi there!</p>
+        <p>
+          You are not signed in.{' '}
+          <Link href="/auth">
+            <a>Sign in</a>
+          </Link>
+        </p>
       </div>
-      <FirebaseAuth />
-    </main>
+    );
+  }
 
-    <footer>
-      <a
-        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by <img src="/vercel.svg" alt="Vercel Logo" />
-      </a>
-    </footer>
-  </div>
-);
+  return (
+    <div>
+      <div>
+        <p>You&apos;re signed in. Email: {user.email}</p>
+        <p
+          style={{
+            display: 'inline-block',
+            color: 'blue',
+            textDecoration: 'underline',
+            cursor: 'pointer',
+          }}
+          onClick={() => logout()}
+        >
+          Log out
+        </p>
+      </div>
+      {error && <div>Failed to fetch auth status!</div>}
+      {data && !error ? (
+        <div>Your status is {data.status}.</div>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
+  );
+};
 
 export default Home;
