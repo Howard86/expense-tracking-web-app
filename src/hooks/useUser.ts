@@ -1,8 +1,7 @@
-import firebase from 'firebase/app';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import mapUserData, { UserData } from '@/utils/mapUserData';
-import initFirebase from '@/utils/firebase';
+import firebase, { initFirebase } from '@/utils/firebase';
 import {
   setUserCookie,
   removeUserCookie,
