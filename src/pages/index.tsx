@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import Head from 'next/head';
+import FirebaseAuth from '@/components/FirebaseAuth';
 
 const Home: FC = () => (
   <div>
@@ -38,6 +39,7 @@ const Home: FC = () => (
           <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
         </a>
       </div>
+      <FirebaseAuth />
     </main>
 
     <footer>
