@@ -1,7 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, SyntheticEvent, useState } from 'react';
 import useSWR from 'swr';
 import Link from 'next/link';
 import useUser from '@/hooks/useUser';
+import firebase from '@/utils/firebase';
 import type { AuthResponse } from './api/auth';
 
 const fetcher = (endpoint: string, token: string) =>
@@ -12,12 +13,24 @@ const fetcher = (endpoint: string, token: string) =>
   }).then((res) => res.json());
 
 const Home: FC = () => {
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState(0);
   const { user, logout } = useUser();
   const { data, error } = useSWR<AuthResponse>(
     user ? ['auth', user.token] : null,
     fetcher,
     { errorRetryCount: 1 },
   );
+
+  const handleOnSubmit = (event: SyntheticEvent): void => {
+    event.preventDefault();
+    firebase.firestore().collection('expense').add({
+      name,
+      price,
+    });
+
+    alert('success');
+  };
 
   if (!user) {
     return (
@@ -51,7 +64,33 @@ const Home: FC = () => {
       </div>
       {error && <div>Failed to fetch auth status!</div>}
       {data && !error ? (
-        <div>Your status is {data.status}.</div>
+        <>
+          <div>Your status is {data.status}.</div>
+          <form>
+            <div>
+              Name
+              <br />
+              <input
+                type="text"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+              />
+            </div>
+            <div>
+              Price
+              <br />
+              <input
+                type="number"
+                value={price}
+                min="0"
+                onChange={(event) => setPrice(event.target.valueAsNumber)}
+              />
+            </div>
+            <button type="submit" onClick={handleOnSubmit}>
+              Save
+            </button>
+          </form>
+        </>
       ) : (
         <div>Loading...</div>
       )}
