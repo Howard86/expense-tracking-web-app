@@ -12,6 +12,7 @@ module.exports = {
     'jest-watch-typeahead/testname',
   ],
   moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
     '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__mocks__/fileMock.js',
   },
 };
