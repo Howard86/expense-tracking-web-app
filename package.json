@@ -1,10 +1,10 @@
 {
-  "name": "nextjs-template",
+  "name": "expense-tracking-web-app",
   "version": "1.0.0",
-  "description": "Next.js template configured with TypeScript, ESLint, Prettier and git hooks",
+  "description": "Track and analyze daily expenses with Google Sheet",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Howard86/nextjs-template"
+    "url": "https://github.com/Howard86/expense-tracking-web-app"
   },
   "author": "Howard Tai <howard@howardism.dev>",
   "license": "MIT",
@@ -18,10 +18,12 @@
     "husky"
   ],
   "bugs": {
-    "url": "https://github.com/Howard86/nextjs-template/issues"
+    "url": "https://github.com/Howard86/expense-tracking-web-app/issues"
   },
-  "homepage": "https://github.com/Howard86/nextjs-template",
+  "homepage": "https://github.com/Howard86/expense-tracking-web-app",
   "scripts": {
+    "version": "gitmoji-changelog --group-similar-commits && git add CHANGELOG.md",
+    "test": "jest",
     "check": "npm run type-check && npm run lint && npm run format",
     "type-check": "tsc --noEmit",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
@@ -36,14 +38,20 @@
     "react-dom": "^17.0.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@types/jest": "^26.0.19",
     "@types/node": "^14.14.7",
     "@types/react": "^16.9.56",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
+    "babel-jest": "^26.6.3",
     "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-react": "^7.21.5",
     "husky": "^4.3.0",
+    "jest": "^26.6.3",
+    "jest-watch-typeahead": "^0.6.1",
     "lint-staged": "^10.5.1",
     "prettier": "^2.1.2",
     "typescript": "^4.0.5"
