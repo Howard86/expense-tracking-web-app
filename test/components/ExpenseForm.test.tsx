@@ -2,6 +2,12 @@ import React from 'react';
 import { ByRoleMatcher, render, screen } from '@testing-library/react';
 import ExpenseForm from '@/components/ExpenseForm';
 
+jest.mock('@/hooks/useUser', () => {
+  return jest.fn(() => ({
+    user: null,
+  }));
+});
+
 const testRole = (
   labelText: string,
   role: ByRoleMatcher,

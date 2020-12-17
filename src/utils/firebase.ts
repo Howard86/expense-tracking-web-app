@@ -15,7 +15,7 @@ export const initFirebase = (): void => {
   }
 };
 
-export const getExpense = (
+export const getExpenseCollection = (
   username: string,
 ): firebase.firestore.CollectionReference =>
   firebase.firestore().collection(`users/${username}/expense`);

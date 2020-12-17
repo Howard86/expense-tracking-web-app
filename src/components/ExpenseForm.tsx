@@ -6,17 +6,20 @@ import {
   FormLabel,
   VStack,
   Input,
+  useToast,
 } from '@chakra-ui/react';
 import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
+import useUser from '@/hooks/useUser';
+import { getExpenseCollection } from '@/utils/firebase';
 
-interface FormValues {
+export interface Expense {
   category: string;
   name: string;
   date: string;
   cost: number;
 }
 
-const initialValues: FormValues = {
+const initialValues: Expense = {
   category: '伙食費',
   name: '午餐',
   date: new Date().toISOString().slice(0, 10),
@@ -35,16 +38,35 @@ const validateNumber = (value?: number): string => {
 };
 
 const ExpenseForm: FC = () => {
+  const { user } = useUser();
+  const toast = useToast({ duration: 3000, position: 'bottom' });
+
   // TODO: update handleOnSubmit
   const handleOnSubmit = (
-    values: FormValues,
-    actions: FormikHelpers<FormValues>,
+    values: Expense,
+    actions: FormikHelpers<Expense>,
   ): void => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      actions.setSubmitting(false);
-      actions.setValues(initialValues);
-    }, 1000);
+    if (user !== null) {
+      getExpenseCollection(user.email)
+        .add(values)
+        .then(() => {
+          actions.setValues(initialValues);
+          toast({
+            title: 'Submit Success',
+            status: 'success',
+          });
+        })
+        .catch((error) => {
+          toast({
+            title: 'Something went wrong!',
+            status: 'error',
+            description: error.message,
+          });
+        })
+        .finally(() => {
+          actions.setSubmitting(false);
+        });
+    }
   };
 
   return (
@@ -52,7 +74,7 @@ const ExpenseForm: FC = () => {
       {({ isSubmitting }) => (
         <VStack as={Form} spacing={4}>
           <Field name="date" validate={validateString}>
-            {({ field, form }: FieldProps<string, FormValues>) => (
+            {({ field, form }: FieldProps<string, Expense>) => (
               <FormControl isInvalid={form.errors.date && form.touched.date}>
                 <FormLabel htmlFor="date">日期</FormLabel>
                 <Input {...field} type="date" id="date" placeholder="date" />
@@ -61,7 +83,7 @@ const ExpenseForm: FC = () => {
             )}
           </Field>
           <Field name="category" validate={validateString}>
-            {({ field, form }: FieldProps<string, FormValues>) => (
+            {({ field, form }: FieldProps<string, Expense>) => (
               <FormControl
                 isInvalid={form.errors.category === '' && form.touched.category}
               >
@@ -72,7 +94,7 @@ const ExpenseForm: FC = () => {
             )}
           </Field>
           <Field name="name" validate={validateString}>
-            {({ field, form }: FieldProps<string, FormValues>) => (
+            {({ field, form }: FieldProps<string, Expense>) => (
               <FormControl isInvalid={form.errors.name && form.touched.name}>
                 <FormLabel htmlFor="name">細項</FormLabel>
                 <Input {...field} id="name" placeholder="name" />
@@ -82,7 +104,7 @@ const ExpenseForm: FC = () => {
           </Field>
 
           <Field name="cost" validate={validateNumber}>
-            {({ field, form }: FieldProps<number, FormValues>) => (
+            {({ field, form }: FieldProps<number, Expense>) => (
               <FormControl isInvalid={form.errors.cost && form.touched.cost}>
                 <FormLabel htmlFor="cost">開銷</FormLabel>
                 <Input {...field} id="cost" placeholder="cost" type="number" />
@@ -93,8 +115,9 @@ const ExpenseForm: FC = () => {
           <Button
             mt={4}
             colorScheme="blue"
-            isLoading={isSubmitting}
             type="submit"
+            isLoading={isSubmitting}
+            isDisabled={user === null}
           >
             Submit
           </Button>
