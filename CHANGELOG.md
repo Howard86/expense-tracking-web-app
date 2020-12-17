@@ -1,5 +1,27 @@
 # Changelog
 
+<a name="1.2.0"></a>
+## 1.2.0 (2020-12-17)
+
+### Added
+
+- ✨ add submit logic with firebase [[b5f75a7](https://github.com/Howard86/expense-tracking-web-app/commit/b5f75a76032f1d82940078cbf592bd60f40e200f)]
+- ✨ add collection service [[feb1d98](https://github.com/Howard86/expense-tracking-web-app/commit/feb1d98036859100456d74974c01cb5a265d228f)]
+- ✨ add ExpenseRadio [[7f09a43](https://github.com/Howard86/expense-tracking-web-app/commit/7f09a4341ad60b7cbecd7013cf6601aa44b2ffe2)]
+- ✨ add Expense &amp; Income pages [[9a019c9](https://github.com/Howard86/expense-tracking-web-app/commit/9a019c9d07d64ab950bbe2e0e0c644e083e0a4b4)]
+- ✨ add ExpenseForm [[7e2e665](https://github.com/Howard86/expense-tracking-web-app/commit/7e2e665bf30ad016f584045f13920888b11bf050)]
+- ➕ add formik [[6cc7395](https://github.com/Howard86/expense-tracking-web-app/commit/6cc7395f3ad65e1691e0acbe67032fc39c75478e)]
+- ✨ add Footer with navigation [[107b9b4](https://github.com/Howard86/expense-tracking-web-app/commit/107b9b44dad777652894648e55bae7f9f3efe7b9)]
+- ✨ add route link [[a88fd6e](https://github.com/Howard86/expense-tracking-web-app/commit/a88fd6ef7702b8f34d3e2c3ff4ec450ff6ce8bdc)]
+- ✨ add Layout Component [[1795c7b](https://github.com/Howard86/expense-tracking-web-app/commit/1795c7beb1449f76166596890c7aa92ae2508fbf)]
+- ✨ add ChakraProvider [[57e608d](https://github.com/Howard86/expense-tracking-web-app/commit/57e608dc3fae12c1a84b9bc55ec4325296e023cc)]
+- ➕ add chakra-ui, emotion &amp; framer-motion [[41c5803](https://github.com/Howard86/expense-tracking-web-app/commit/41c5803b9a42f9b3a6c736232e39e447a85faf6d)]
+
+### Miscellaneous
+
+- 🔀 Merge pull request [#1](https://github.com/Howard86/expense-tracking-web-app/issues/1) from Howard86/feature/add-firebase [[8ff9a57](https://github.com/Howard86/expense-tracking-web-app/commit/8ff9a575a404a2be4d9e282b6b488ca64ae87f33)]
+
+
 <a name="1.1.0"></a>
 ## 1.1.0 (2020-12-12)
 
