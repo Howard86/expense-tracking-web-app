@@ -1,8 +1,9 @@
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
+import reducer from './reducer';
 
 const store = configureStore({
-  reducer: {},
+  reducer,
   devTools: process.env.NODE_ENV === 'development',
 });
 
