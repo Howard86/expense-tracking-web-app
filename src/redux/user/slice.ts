@@ -6,12 +6,12 @@ export interface UserData {
   token: string;
 }
 
-export interface UserProps {
+export interface UserStates {
   userData?: UserData;
   isLoggedIn: boolean;
 }
 
-const initialState: UserProps = {
+const initialState: UserStates = {
   isLoggedIn: false,
 };
 

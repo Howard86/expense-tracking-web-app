@@ -1,12 +1,18 @@
 import React from 'react';
 import { ByRoleMatcher, render, screen } from '@testing-library/react';
 import ExpenseForm from '@/components/ExpenseForm';
+import type { UserProps } from '@/redux/user/slice';
 
-jest.mock('@/hooks/useUser', () => {
-  return jest.fn(() => ({
-    user: null,
-  }));
-});
+jest.mock('@/redux/user');
+
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn(
+    (): UserProps => ({
+      userData: { email: 'test@abc.com', id: '12312312', token: '21321sda' },
+      isLoggedIn: true,
+    }),
+  ),
+}));
 
 const testRole = (
   labelText: string,

@@ -1,9 +1,7 @@
 import React, { FC } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import type { auth } from 'firebaseui';
-import firebase, { initFirebase } from '@/utils/firebase';
-
-initFirebase();
+import firebase from '@/redux/firebase';
 
 const firebaseAuthConfig: auth.Config = {
   signInFlow: 'popup',

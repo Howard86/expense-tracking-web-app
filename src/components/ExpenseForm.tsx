@@ -9,8 +9,9 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
-import useUser from '@/hooks/useUser';
-import { getExpenseCollection } from '@/utils/firebase';
+import { useSelector } from 'react-redux';
+import { getCollection } from '@/redux/firebase';
+import { selectUser } from '@/redux/user';
 
 export interface Expense {
   category: string;
@@ -38,7 +39,7 @@ const validateNumber = (value?: number): string => {
 };
 
 const ExpenseForm: FC = () => {
-  const { user } = useUser();
+  const { userData } = useSelector(selectUser);
   const toast = useToast({ duration: 3000, position: 'bottom' });
 
   // TODO: update handleOnSubmit
@@ -46,8 +47,8 @@ const ExpenseForm: FC = () => {
     values: Expense,
     actions: FormikHelpers<Expense>,
   ): void => {
-    if (user !== null) {
-      getExpenseCollection(user.email)
+    if (userData) {
+      getCollection(userData.email, 'expense')
         .add(values)
         .then(() => {
           actions.setValues(initialValues);
@@ -117,7 +118,7 @@ const ExpenseForm: FC = () => {
             colorScheme="blue"
             type="submit"
             isLoading={isSubmitting}
-            isDisabled={user === null}
+            isDisabled={typeof userData === 'undefined'}
           >
             Submit
           </Button>

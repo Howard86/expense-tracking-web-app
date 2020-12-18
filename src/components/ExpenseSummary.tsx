@@ -1,16 +1,17 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectUser } from '@/redux/user';
+import { getCollection } from '@/redux/firebase';
 import { Heading, Box, Text } from '@chakra-ui/react';
 import { Expense } from '@/components/ExpenseForm';
-import { getExpenseCollection } from '@/utils/firebase';
-import useUser from '@/hooks/useUser';
 
 const ExpenseSummary: FC = () => {
+  const { userData } = useSelector(selectUser);
   const [records, setRecords] = useState<Expense[]>([]);
-  const { user } = useUser();
 
   useEffect(() => {
-    if (user && user.email !== null) {
-      const collection = getExpenseCollection(user.email);
+    if (userData) {
+      const collection = getCollection(userData.email, 'expense');
       collection
         .get({ source: 'cache' })
         .then((snapshot) => {
@@ -18,7 +19,7 @@ const ExpenseSummary: FC = () => {
         })
         .catch(console.error);
     }
-  }, [typeof user]);
+  }, [userData?.email]);
 
   return (
     <>

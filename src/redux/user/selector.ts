@@ -1,4 +1,4 @@
 import type { RootState } from '../store';
-import type { UserProps } from './slice';
+import type { UserStates } from './slice';
 
-export const selectUser = (state: RootState): UserProps => state.user;
+export const selectUser = (state: RootState): UserStates => state.user;
