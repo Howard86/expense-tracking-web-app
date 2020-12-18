@@ -1,5 +1,16 @@
+import type firebase from 'firebase';
 import cookies from 'js-cookie';
-import type { UserData } from './mapUserData';
+import { UserData } from './slice';
+
+export const mapUserData = async (user: firebase.User): Promise<UserData> => {
+  const { uid, email } = user;
+  const token = await user.getIdToken(true);
+  return {
+    id: uid,
+    email,
+    token,
+  };
+};
 
 export const getUserFromCookie = (): UserData | null => {
   const cookie = cookies.get('auth');
