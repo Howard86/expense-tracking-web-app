@@ -1,7 +1,6 @@
-import type { Expense } from '@/components/ExpenseForm';
 import type { AppThunk } from '../store';
 import { getCollection } from '../firebase';
-import { add, fetchFresh } from './slice';
+import { Expense, add, fetchFresh } from './slice';
 
 export const addExpense = (
   expense: Expense,
@@ -37,7 +36,10 @@ export const getAllExpense = (): AppThunk => async (
   const collection = getCollection(user.userData.email, 'expense');
 
   try {
-    const result = await collection.orderBy('date', 'desc').limit(10).get();
+    const result = await collection
+      .orderBy('timestamp', 'desc')
+      .limit(10)
+      .get();
 
     if (result.size === 0) {
       throw new Error('no document found');

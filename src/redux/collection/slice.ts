@@ -1,6 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { Expense } from '@/components/ExpenseForm';
 
+export interface Expense {
+  category: string;
+  name: string;
+  timestamp: number;
+  cost: number;
+}
 export interface CollectionStates {
   isFetched: boolean;
   expense: Expense[];

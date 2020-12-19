@@ -10,20 +10,15 @@ import {
 } from '@chakra-ui/react';
 import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
 import { useSelector } from 'react-redux';
-import { getCollection } from '@/redux/firebase';
+import dayjs from 'dayjs';
+import { useAppDispatch } from '@/redux/store';
 import { selectUser } from '@/redux/user';
-
-export interface Expense {
-  category: string;
-  name: string;
-  date: string;
-  cost: number;
-}
+import { addExpense, Expense } from '@/redux/collection';
 
 const initialValues: Expense = {
   category: '伙食費',
   name: '午餐',
-  date: new Date().toISOString().slice(0, 10),
+  timestamp: dayjs().unix(),
   cost: 2,
 };
 
@@ -39,47 +34,49 @@ const validateNumber = (value?: number): string => {
 };
 
 const ExpenseForm: FC = () => {
+  const dispatch = useAppDispatch();
   const { userData } = useSelector(selectUser);
   const toast = useToast({ duration: 3000, position: 'bottom' });
 
   // TODO: update handleOnSubmit
-  const handleOnSubmit = (
+  const handleOnSubmit = async (
     values: Expense,
     actions: FormikHelpers<Expense>,
-  ): void => {
-    if (userData) {
-      getCollection(userData.email, 'expense')
-        .add(values)
-        .then(() => {
-          actions.setValues(initialValues);
-          toast({
-            title: 'Submit Success',
-            status: 'success',
-          });
-        })
-        .catch((error) => {
-          toast({
-            title: 'Something went wrong!',
-            status: 'error',
-            description: error.message,
-          });
-        })
-        .finally(() => {
-          actions.setSubmitting(false);
-        });
+  ): Promise<void> => {
+    const isSuccess = await dispatch(addExpense(values));
+
+    if (isSuccess) {
+      actions.setValues(initialValues);
+      toast({
+        title: 'Submit Success',
+        status: 'success',
+      });
+    } else {
+      toast({
+        title: 'Something went wrong!',
+        status: 'error',
+      });
     }
+    actions.setSubmitting(false);
   };
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleOnSubmit}>
       {({ isSubmitting }) => (
         <VStack as={Form} spacing={4}>
-          <Field name="date" validate={validateString}>
-            {({ field, form }: FieldProps<string, Expense>) => (
-              <FormControl isInvalid={form.errors.date && form.touched.date}>
-                <FormLabel htmlFor="date">日期</FormLabel>
-                <Input {...field} type="date" id="date" placeholder="date" />
-                <FormErrorMessage>{form.errors.date}</FormErrorMessage>
+          <Field name="timestamp" validate={validateString}>
+            {({ field, form }: FieldProps<number, Expense>) => (
+              <FormControl
+                isInvalid={form.errors.timestamp && form.touched.timestamp}
+              >
+                <FormLabel htmlFor="timestamp">日期</FormLabel>
+                <Input
+                  {...field}
+                  type="date"
+                  id="timestamp"
+                  placeholder="timestamp"
+                />
+                <FormErrorMessage>{form.errors.timestamp}</FormErrorMessage>
               </FormControl>
             )}
           </Field>
