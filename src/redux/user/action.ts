@@ -1,7 +1,8 @@
 import type { AppThunk } from '../store';
-import firebase from '../firebase';
+import type firebase from '../firebase';
+import { signOut } from '../firebase';
 import fetcher from './fetcher';
-import { actions } from './slice';
+import { setLogin, setLogout } from './slice';
 import { mapUserData, removeUserCookie, setUserCookie } from './util';
 
 export const login = (user: firebase.User): AppThunk => async (
@@ -15,16 +16,16 @@ export const login = (user: firebase.User): AppThunk => async (
     if (original.userData?.token !== userData.token) {
       await fetcher('auth', userData.token);
       setUserCookie(userData);
-      dispatch(actions.login(userData));
+      dispatch(setLogin(userData));
     }
   } catch (error) {
     console.error(error);
-    dispatch(actions.logout());
+    dispatch(setLogout());
   }
 };
 
 export const logout = (): AppThunk => async (dispatch) => {
-  await firebase.auth().signOut();
+  await signOut();
   removeUserCookie();
-  dispatch(actions.logout());
+  dispatch(setLogout());
 };

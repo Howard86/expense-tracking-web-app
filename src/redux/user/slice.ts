@@ -15,16 +15,19 @@ const initialState: UserStates = {
   isLoggedIn: false,
 };
 
-export const { actions, reducer } = createSlice({
+const { actions, reducer } = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    login(state, action: PayloadAction<UserData>) {
+    setLogin(state, action: PayloadAction<UserData>) {
       state.isLoggedIn = true;
       state.userData = action.payload;
     },
-    logout(state) {
+    setLogout(state) {
       state.isLoggedIn = false;
     },
   },
 });
+
+export const { setLogin, setLogout } = actions;
+export default reducer;

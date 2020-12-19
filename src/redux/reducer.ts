@@ -1,4 +1,4 @@
-import { reducer as user } from './user/slice';
+import user from './user/slice';
 
 const reducer = {
   user,

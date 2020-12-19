@@ -23,4 +23,6 @@ export const getCollection = (
 ): firebase.firestore.CollectionReference =>
   firebase.firestore().collection(`users/${username}/${collectionType}`);
 
+export const signOut = (): Promise<void> => firebase.auth().signOut();
+
 export default firebase;

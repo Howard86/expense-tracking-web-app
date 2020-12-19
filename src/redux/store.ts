@@ -10,6 +10,11 @@ const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = (): AppDispatch => useDispatch<AppDispatch>();
-export type AppThunk = ThunkAction<void, RootState, unknown, Action<string>>;
+export type AppThunk<R = void> = ThunkAction<
+  R,
+  RootState,
+  unknown,
+  Action<string>
+>;
 
 export default store;
