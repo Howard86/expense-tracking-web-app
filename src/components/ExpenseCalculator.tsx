@@ -1,11 +1,27 @@
-import React, { FC } from 'react';
-import { Box, Grid, Square } from '@chakra-ui/react';
+import React, { ChangeEvent, FC, useState } from 'react';
+import { Grid, Input, Square, VStack, useToast } from '@chakra-ui/react';
 import useCalculator from '@/hooks/useCalculator';
 import CalculatorButton from '@/components/CalculatorButton';
+import { addExpense } from '@/redux/collection';
+import { useAppDispatch } from '@/redux/store';
+import type { Category } from './ExpenseRadio';
+import ExpenseRadio from './ExpenseRadio';
+import dayjs from 'dayjs';
+import ExpenseCalender from './ExpenseCalendar';
 
+const INITIAL_NAME = '';
+const INITIAL_CATEGORY = '伙食';
 const arrays = Array(3).fill(0);
+const now = dayjs().unix();
 
 const ExpenseCalculator: FC = () => {
+  const [name, setName] = useState<string>(INITIAL_NAME);
+  const [timestamp, setTimestamp] = useState<number>(now);
+  const [category, setCategory] = useState<Category>(INITIAL_CATEGORY);
+  const [isLoading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const toast = useToast({ duration: 3000, position: 'bottom' });
+
   const {
     value,
     handleOnType,
@@ -13,11 +29,45 @@ const ExpenseCalculator: FC = () => {
     handleOnClear,
   } = useCalculator();
 
+  const handleInputOnChange = (event: ChangeEvent<HTMLInputElement>) =>
+    setName(event.target.value);
+
   const handleOnClick = (input: string) => () => handleOnType(input);
 
+  const handleOnSubmit = async (): Promise<void> => {
+    setLoading(true);
+    const isSuccess = await dispatch(
+      addExpense({
+        timestamp,
+        category,
+        name,
+        cost: parseInt(value, 10),
+      }),
+    );
+
+    if (isSuccess) {
+      handleOnClear();
+      setName(INITIAL_NAME);
+      setCategory(INITIAL_CATEGORY);
+      toast({
+        title: 'Submit Success',
+        status: 'success',
+      });
+    } else {
+      toast({
+        title: 'Something went wrong!',
+        status: 'error',
+      });
+    }
+    setTimeout(() => setLoading(false), 2000);
+  };
+
   return (
-    <Box>
-      <Square bg="teal.100" borderRadius="md" p={2}>
+    <VStack spacing={4}>
+      <ExpenseRadio option={category} setOption={setCategory} />
+      <ExpenseCalender timestamp={timestamp} setTimestamp={setTimestamp} />
+      <Input value={name} onChange={handleInputOnChange} placeholder="備註" />
+      <Square bg="teal.100" borderRadius="md" p={2} w={3 / 4}>
         $ {value}
       </Square>
       <Grid
@@ -79,10 +129,11 @@ const ExpenseCalculator: FC = () => {
           colStart={4}
           rowStart={3}
           rowSpan={2}
-          onClick={() => alert('submit')}
+          isLoading={isLoading}
+          onClick={handleOnSubmit}
         />
       </Grid>
-    </Box>
+    </VStack>
   );
 };
 

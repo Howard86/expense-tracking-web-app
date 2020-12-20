@@ -1,10 +1,15 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import ExpenseRadio from '@/components/ExpenseRadio';
+import ExpenseRadio, { Category } from '@/components/ExpenseRadio';
 
 describe('ExpenseRadio', () => {
+  let option: Category = '伙食';
+  const setOption = (name: Category) => {
+    option = name;
+  };
+
   beforeEach(() => {
-    render(<ExpenseRadio />);
+    render(<ExpenseRadio option={option} setOption={setOption} />);
   });
 
   it('should render a radio group', () => {
