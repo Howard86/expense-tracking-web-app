@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '@/redux/user';
 import { getCollection } from '@/redux/firebase';
 import { Heading, Box, Text } from '@chakra-ui/react';
-import { Expense } from '@/components/ExpenseForm';
+import type { Expense } from '@/redux/collection';
 
 const ExpenseSummary: FC = () => {
   const { userData } = useSelector(selectUser);
@@ -29,7 +29,7 @@ const ExpenseSummary: FC = () => {
           <Text>{expense.name}</Text>
           <Text>{expense.category}</Text>
           <Text>{expense.cost}</Text>
-          <Text>{expense.date}</Text>
+          <Text>{expense.timestamp}</Text>
         </Box>
       ))}
     </>
