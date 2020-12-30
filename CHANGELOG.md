@@ -1,5 +1,44 @@
 # Changelog
 
+<a name="1.3.0"></a>
+## 1.3.0 (2020-12-30)
+
+### Added
+
+- ✅ add test-utils to wrap react context [[4598728](https://github.com/Howard86/expense-tracking-web-app/commit/45987280055e65116ee1d996dcc55a5b1eb44038)]
+- ✨ add ExpenseCalendar [[81a0732](https://github.com/Howard86/expense-tracking-web-app/commit/81a07324de7fd952aafcc836632b10e5eb19d815)]
+    * ✨ add ExpenseCalculator ([b4e6edf](https://github.com/Howard86/expense-tracking-web-app/commit/b4e6edfcedee0acfb541b559b0ca46d3bb01cfa0))
+- ✨ add CalculatorButton [[8e563e8](https://github.com/Howard86/expense-tracking-web-app/commit/8e563e8160022afc06f4f1292749ee5e2a57e166)]
+- ➕ add dayjs [[187fe63](https://github.com/Howard86/expense-tracking-web-app/commit/187fe6379a8b63105c40e6055f9591d6ca282501)]
+- ✨ add collection store [[3acb018](https://github.com/Howard86/expense-tracking-web-app/commit/3acb018f3fa1ad03ef368ef2119f605b8d399975)]
+- ✨ add user store [[f4d1470](https://github.com/Howard86/expense-tracking-web-app/commit/f4d1470e4114784f37bf3612f6d55712b7b446cc)]
+- ➕ add redux toolkit [[ad1ddcd](https://github.com/Howard86/expense-tracking-web-app/commit/ad1ddcd605a7118a9edf3a926273953f72779cdb)]
+
+### Changed
+
+- 💄 update expense page UI [[12ef651](https://github.com/Howard86/expense-tracking-web-app/commit/12ef65155ab9abf8735e2f43aed3ae085da7e0b1)]
+- 🎨 update ExpensePage with ExpenseCalculator [[2af61cb](https://github.com/Howard86/expense-tracking-web-app/commit/2af61cbd9f31b7980af022002423b8c5fc233dd7)]
+- 🎨 update ExpenseForm with timestamp &amp; store [[3266b65](https://github.com/Howard86/expense-tracking-web-app/commit/3266b653d6e6b39dd00d2a5ebc3c1f701c30589f)]
+- 🔧 set up debugging mode [[5212921](https://github.com/Howard86/expense-tracking-web-app/commit/52129213544f28fe4ff883d7a079c4325c9083e6)]
+- 🎨 update redux import/export format [[b6103f9](https://github.com/Howard86/expense-tracking-web-app/commit/b6103f902935a7a0efaaf1dc867d067c8387b059)]
+- 🎨 update component logic with user store [[5403cfc](https://github.com/Howard86/expense-tracking-web-app/commit/5403cfcbe01d47bc5d6e27a86722e3c5afb7d491)]
+- 🚚 move util logix to redux [[22f9b68](https://github.com/Howard86/expense-tracking-web-app/commit/22f9b6829c6ebe4da259acbb9a7411a0efd0f3a0)]
+- 🔧 set up redux [[6a8add1](https://github.com/Howard86/expense-tracking-web-app/commit/6a8add1aeca65c2e5f53f048a00d019b18fe7ecb)]
+
+### Removed
+
+- ➖ remove formik &amp; swr [[52ac794](https://github.com/Howard86/expense-tracking-web-app/commit/52ac794740986fa618e0d76c0c506cad0314c343)]
+- 🔥 remove unused ExpenseForm [[13ee0c7](https://github.com/Howard86/expense-tracking-web-app/commit/13ee0c72c1489f904695de77af1bc6109fcd6391)]
+
+### Fixed
+
+- 🐛 fix Safari grid compatibility [[cf0477f](https://github.com/Howard86/expense-tracking-web-app/commit/cf0477f84c60ee71f479c600fa5f4c0eb62c1f04)]
+
+### Miscellaneous
+
+-  Merge pull request [#3](https://github.com/Howard86/expense-tracking-web-app/issues/3) from Howard86/feature/add-chkara-ui [[9d7c6b5](https://github.com/Howard86/expense-tracking-web-app/commit/9d7c6b547b10d652a89e7ec87f53021d7e026b0b)]
+
+
 <a name="1.2.0"></a>
 ## 1.2.0 (2020-12-17)
 
