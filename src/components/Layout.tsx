@@ -7,7 +7,7 @@ const Layout: FC = ({ children }) => {
   useUserListener();
 
   return (
-    <Container h="100vh" centerContent>
+    <Container minH="100vh" centerContent>
       <VStack as="main" textAlign="center" my="4" spacing={[2, 4, 8]}>
         {children}
       </VStack>

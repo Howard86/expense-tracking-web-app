@@ -72,9 +72,10 @@ const ExpenseCalculator: FC = () => {
       </Square>
       <Grid
         my={2}
+        gap={2}
+        h={0}
         templateRows="repeat(4, 1fr)"
         templateColumns="repeat(4, 1fr)"
-        gap={2}
       >
         {arrays.map((_, j) =>
           arrays.map((_, i) => {
