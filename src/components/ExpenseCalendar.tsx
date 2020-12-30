@@ -18,7 +18,7 @@ const ExpenseCalender: FC<ExpenseCalendarProps> = ({
   const decrement = () => setTimestamp(timestamp - ONE_DAY);
 
   return (
-    <HStack>
+    <HStack spacing={4}>
       <Button onClick={increment}>+</Button>
       <Text>{dayjs.unix(timestamp).format('YYYY年MM月DD日')}</Text>
       <Button onClick={decrement}>-</Button>

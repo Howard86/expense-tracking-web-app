@@ -66,7 +66,12 @@ const ExpenseCalculator: FC = () => {
     <VStack spacing={4}>
       <ExpenseRadio option={category} setOption={setCategory} />
       <ExpenseCalender timestamp={timestamp} setTimestamp={setTimestamp} />
-      <Input value={name} onChange={handleInputOnChange} placeholder="備註" />
+      <Input
+        value={name}
+        onChange={handleInputOnChange}
+        placeholder="備註"
+        width="80%"
+      />
       <Square bg="teal.100" borderRadius="md" p={2} w={3 / 4}>
         $ {value}
       </Square>
